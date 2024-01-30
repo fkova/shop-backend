@@ -6,4 +6,8 @@ export interface Product {
     title: string;
 }
 
+export interface ProductNotFoundResponseBody {
+    message: 'Product not found'
+}
+
 export type Products = Product[];
