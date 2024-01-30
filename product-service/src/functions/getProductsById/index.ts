@@ -9,8 +9,12 @@ export default {
         path: 'products/{id}',
         responses: {
           200: {
-            description: 'Successful API Response',
+            description: 'Successful API Response, Product found',
             bodyType: 'Product'
+          },
+          404: {
+            description: 'Product not found',
+            bodyType: 'ProductNotFoundResponseBody'
           }
         }
       },

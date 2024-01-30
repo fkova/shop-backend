@@ -5,6 +5,9 @@ import products from '../../products.json';
 
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> = async () => {
   return {
+    headers: { 
+      'Access-Control-Allow-Origin': '*' 
+    },
     statusCode: 200,
     body: JSON.stringify(products)
   };
