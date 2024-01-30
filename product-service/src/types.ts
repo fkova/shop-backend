@@ -21,4 +21,8 @@ export interface StockDocument {
 }
 
 export type Document = ProductDocument | StockDocument;
+
 export type TableName = 'products' | 'stocks';
+export interface ProductNotFoundResponseBody {
+    message: 'Product not found'
+}

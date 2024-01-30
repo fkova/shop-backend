@@ -3,13 +3,22 @@ import { middyfy } from '@libs/lambda';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { databaseService } from 'src/dependencies';
 import { IDatabaseService } from 'src/services/database-service';
+import { notFoundResponse } from '../../responses';
 
 const getProductsById = (databaseService: IDatabaseService): ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> => async (event) => {
   const productId = event?.pathParameters?.id;
   const productDocument = await databaseService.getProductById(productId);
+
+  if(!productDocument){
+    return notFoundResponse('Product not found');
+  }
+
   const stockDocument = await databaseService.getStockById(productId);
 
   return {
+    headers: { 
+      'Access-Control-Allow-Origin': '*' 
+    },
     statusCode: 200,
     body: JSON.stringify({
       ...productDocument,
