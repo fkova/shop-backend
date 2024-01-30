@@ -1,5 +1,5 @@
 export interface Product {
-    count: number;
+    count: number
     description: string;
     id: string;
     price: number;
@@ -7,3 +7,18 @@ export interface Product {
 }
 
 export type Products = Product[];
+
+export interface ProductDocument {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+}
+    
+export interface StockDocument {
+    product_id: string;
+    count: number;
+}
+
+export type Document = ProductDocument | StockDocument;
+export type TableName = 'products' | 'stocks';
