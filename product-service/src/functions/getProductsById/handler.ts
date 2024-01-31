@@ -3,9 +3,11 @@ import { middyfy } from '@libs/lambda';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { databaseService } from 'src/dependencies';
 import { IDatabaseService } from 'src/services/database-service';
-import { notFoundResponse } from '../../responses';
+import { notFoundResponse, okResponse } from '../../response-factory';
 
 const getProductsById = (databaseService: IDatabaseService): ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> => async (event) => {
+  console.log(event);
+  
   const productId = event?.pathParameters?.id;
   const productDocument = await databaseService.getProductById(productId);
 
@@ -15,16 +17,12 @@ const getProductsById = (databaseService: IDatabaseService): ValidatedEventAPIGa
 
   const stockDocument = await databaseService.getStockById(productId);
 
-  return {
-    headers: { 
-      'Access-Control-Allow-Origin': '*' 
-    },
-    statusCode: 200,
-    body: JSON.stringify({
-      ...productDocument,
-      count: stockDocument.count
-    }),
+  const product = {
+    ...productDocument,
+    count: stockDocument.count
   }
+
+  return okResponse(product);
 };
 
 export const main = middyfy(getProductsById(databaseService))

@@ -1,7 +1,7 @@
 export interface Product {
     count: number
     description: string;
-    id: string;
+    id?: string;
     price: number;
     title: string;
 }
@@ -14,7 +14,7 @@ export interface ProductDocument {
     description: string;
     price: number;
 }
-    
+
 export interface StockDocument {
     product_id: string;
     count: number;
@@ -22,7 +22,11 @@ export interface StockDocument {
 
 export type Document = ProductDocument | StockDocument;
 
-export type TableName = 'products' | 'stocks';
+export enum Table {
+    PRODUCTS = 'products',
+    STOCKS = 'stocks'
+};
+
 export interface ProductNotFoundResponseBody {
     message: 'Product not found'
 }

@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { databaseServiceFactory } from './services/database-service';
+const region = process.env.AWS_REGION || 'us-east-1';
+const dynamo = new AWS.DynamoDB.DocumentClient({ region });
 
-const dynamo = new AWS.DynamoDB.DocumentClient({ region: process.env.REGION });
-
-export const databaseService = databaseServiceFactory(dynamo)
+export const databaseService = databaseServiceFactory(dynamo);

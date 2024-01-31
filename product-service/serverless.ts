@@ -16,6 +16,9 @@ const serverlessConfiguration: AWS = {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
+    httpApi: {
+      cors: true
+    },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
@@ -58,7 +61,7 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
     autoswagger: {
-      // excludeStages: ['dev'],         // remove if you want to generate swagger docs
+      excludeStages: ['dev'],         // remove if you want to generate swagger docs
       typefiles: ['./src/types.ts']
     }
   },

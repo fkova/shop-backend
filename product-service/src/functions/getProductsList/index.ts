@@ -8,6 +8,7 @@ export default {
         method: 'get',
         path: 'products',
         responses: {
+          default: {},
           200: {
             description: 'Successful API Response',
             bodyType: 'Products'
