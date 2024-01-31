@@ -1,24 +1,28 @@
 import { APIGatewayProxyResult } from 'aws-lambda/trigger/api-gateway-proxy';
 import { middyfy } from '@libs/lambda';
-import products from '../../products.json';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { notFoundResponse } from '../../responses';
+import { databaseService } from 'src/dependencies';
+import { IDatabaseService } from 'src/services/database-service';
+import { notFoundResponse, okResponse } from '../../response-factory';
 
-const getProductsById: ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> = async (event) => {
+const getProductsById = (databaseService: IDatabaseService): ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> => async (event) => {
+  console.log(event);
+  
   const productId = event?.pathParameters?.id;
-  const product = products.find(product => product.id === productId);
+  const productDocument = await databaseService.getProductById(productId);
 
-  if(!product){
+  if(!productDocument){
     return notFoundResponse('Product not found');
   }
-  
-  return {
-    headers: { 
-      'Access-Control-Allow-Origin': '*' 
-    },
-    statusCode: 200,
-    body: JSON.stringify(product),
+
+  const stockDocument = await databaseService.getStockById(productId);
+
+  const product = {
+    ...productDocument,
+    count: stockDocument.count
   }
+
+  return okResponse(product);
 };
 
-export const main = middyfy(getProductsById)
+export const main = middyfy(getProductsById(databaseService))

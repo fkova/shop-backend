@@ -1,18 +1,24 @@
 import { handlerPath } from '@libs/handler-resolver';
+import schema from './schema';
+
+
 
 export default {
+
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
       http: {
-        method: 'get',
+        method: 'post',
         path: 'products',
+        request: {
+          schemas: {
+            'application/json': schema,
+          },
+        },
         responses: {
           default: {},
-          200: {
-            description: 'Successful API Response',
-            bodyType: 'Products'
-          }
+          201: 'Created'
         }
       },
     },
