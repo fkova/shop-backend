@@ -8,10 +8,9 @@ import { createdResponse, errorResponse } from 'src/response-factory';
 
 const createProduct = (databaseService: IDatabaseService): ValidatedEventAPIGatewayProxyEvent<APIGatewayProxyResult> => async (event) => {
   console.log(event);
-  
+
   try {
-    const res = await databaseService.createProduct(event.body as Product);
-    
+    const res = await databaseService.createProduct(event.body as Product);    
     console.log(res);
 
   } catch (error) {

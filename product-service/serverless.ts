@@ -61,7 +61,6 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
     autoswagger: {
-      excludeStages: ['dev'],         // remove if you want to generate swagger docs
       typefiles: ['./src/types.ts']
     }
   },
