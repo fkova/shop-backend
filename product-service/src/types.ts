@@ -30,3 +30,10 @@ export enum Table {
 export interface ProductNotFoundResponseBody {
     message: 'Product not found'
 }
+
+export interface CreateProductRequestBody {
+    title: string
+    description: string
+    price: number
+    count: number
+}
