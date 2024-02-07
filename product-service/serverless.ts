@@ -9,6 +9,7 @@ const serverlessConfiguration: AWS = {
   service: 'product-service',
   frameworkVersion: '3',
   plugins: ['serverless-auto-swagger', 'serverless-offline', 'serverless-esbuild'],
+  useDotenv: true,
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -17,14 +18,11 @@ const serverlessConfiguration: AWS = {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
-    httpApi: {
-      cors: true
-    },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      TABLE_PRODUCTS: 'products',
-      TABLE_STOCKS: 'stocks',
+      TABLE_PRODUCTS: '${env:TABLE_PRODUCTS}',
+      TABLE_STOCKS: '${env:TABLE_PRODUCTS}',
       TOPIC_ARN: {
         Ref: 'createProductTopic'
       }
@@ -80,7 +78,7 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SNS::Subscription',
         Properties: {
           Protocol: 'email',
-          Endpoint: 'fkovacs088@gmail.com',
+          Endpoint: '${env:EMAIL}',
           TopicArn: {
             Ref: 'createProductTopic'
           }

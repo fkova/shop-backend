@@ -20,13 +20,6 @@ export interface StockDocument {
     count: number;
 }
 
-export type Document = ProductDocument | StockDocument;
-
-export enum Table {
-    PRODUCTS = 'products',
-    STOCKS = 'stocks'
-};
-
 export interface ProductNotFoundResponseBody {
     message: 'Product not found'
 }
