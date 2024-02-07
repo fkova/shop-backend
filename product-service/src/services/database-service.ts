@@ -1,6 +1,11 @@
 import DynamoDB from "aws-sdk/clients/dynamodb";
-import { Document, Product, ProductDocument, StockDocument, Table } from "src/types";
+import { Product, ProductDocument, StockDocument } from "src/types";
 import { v4 as uuid } from 'uuid';
+
+type Document = ProductDocument | StockDocument;
+
+const productsTable = process.env.TABLE_PRODUCTS;
+const stocksTable = process.env.TABLE_STOCKS;
 
 export interface IDatabaseService {
     put(table: string, document: Document): Promise<unknown>;
@@ -20,7 +25,7 @@ export const databaseServiceFactory = (dynamoClient: DynamoDB.DocumentClient): I
     };
 
     const getById = async <T extends Document>(table, id: string) => {
-        let key = table === 'products' ? 'id' : 'product_id';
+        let key = table === productsTable ? 'id' : 'product_id';
 
         return (await dynamoClient.get({
             TableName: table,
@@ -36,14 +41,14 @@ export const databaseServiceFactory = (dynamoClient: DynamoDB.DocumentClient): I
         return dynamoClient.transactWrite({
             TransactItems: [{
                 Put: {
-                    TableName: Table.PRODUCTS,
+                    TableName: productsTable,
                     Item: {
                         id, title, description, price
                     }
                 }
             }, {
                 Put: {
-                    TableName: Table.STOCKS,
+                    TableName: stocksTable,
                     Item: {
                         product_id: id, count
                     }
@@ -58,10 +63,10 @@ export const databaseServiceFactory = (dynamoClient: DynamoDB.DocumentClient): I
 
     return {
         put: (table, document) => saveDocument(table, document),
-        scanProducts: () => scan('products'),
-        scanStocks: () => scan('stocks'),
-        getProductById: (id) => getById('products', id),
-        getStockById: (id) => getById('stocks', id),
+        scanProducts: () => scan(productsTable),
+        scanStocks: () => scan(stocksTable),
+        getProductById: (id) => getById(productsTable, id),
+        getStockById: (id) => getById(stocksTable, id),
         createProduct: (product) => createProduct(product)
     }
 }
