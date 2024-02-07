@@ -12,3 +12,5 @@ For detailed instructions, please refer to the [documentation](https://www.serve
 - go to service folder
 - Run `npm run invoke` to call emulated lambda function with mock event
 - Run `npm run off` to start serverless stack locally on localhost:3000 without deploy (Dynamo and s3 should be exist on AWS)
+
+tasks: https://github.com/EPAM-JS-Competency-center/cloud-development-course-initial/blob/main/README.md

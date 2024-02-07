@@ -37,3 +37,24 @@ export interface CreateProductRequestBody {
     price: number
     count: number
 }
+
+
+export type Mock<T> = {
+    service: T;
+    functions: {
+        // @ts-ignore works as expected but shows error, re-investigate later
+        [P in keyof T]?: jest.Mock<ReturnType<T[P]>, Parameters<T[P]>>;
+    };
+};
+
+export const createMockService = <T>(...functionsToMock: (keyof T)[]): Mock<T> => {
+    const functions = functionsToMock.reduce((accumulator, currentValue) => ({
+        ...accumulator,
+        [currentValue]: jest.fn()
+    }), {});
+
+    return {
+        functions,
+        service: jest.fn<Partial<T>, undefined[]>(() => functions)() as T
+    };
+};
