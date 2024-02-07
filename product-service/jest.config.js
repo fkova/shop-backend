@@ -3,6 +3,10 @@ module.exports = {
   moduleNameMapper: {
     '@libs/(.*)': '<rootDir>/src/libs/$1',
   },
+  rootDir: "./",
+  modulePaths: [
+    "<rootDir>"
+  ],
   verbose: true,
   collectCoverage: true,
   coverageDirectory: "coverage",

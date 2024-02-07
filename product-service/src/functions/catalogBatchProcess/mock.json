@@ -1,0 +1,18 @@
+{
+  "Records": [
+    {
+      "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
+      "body": "{\"title\":\"t2\",\"description\":\"d2\",\"price\":\"2\",\"count\":\"2\"}",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:123456789012:MyQueue",
+      "awsRegion": "us-east-1"
+    },
+    {
+      "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb79",
+      "body": "{\"title\":\"t3\",\"description\":\"d3\",\"price\":\"3\",\"count\":\"3\"}",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:123456789012:MyQueue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

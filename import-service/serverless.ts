@@ -17,7 +17,9 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      IMPORT_BUCKET: 'my-shop-kfa-imports'
+      IMPORT_BUCKET: 'my-shop-kfa-imports',
+      // check in AWS console
+      CATALOG_ITEMS_QUEUE_URL: 'https://sqs.us-east-1.amazonaws.com/471112716818/catalogItemsQueue',
     },
     iam: {
       role: {
@@ -29,7 +31,7 @@ const serverlessConfiguration: AWS = {
           },
           {
             Effect: 'Allow',
-            Action: 's3:ListBucket' ,
+            Action: 's3:*' ,
             Resource: [ 'arn:aws:s3:::my-shop-kfa-imports/*']
           }
         ]
